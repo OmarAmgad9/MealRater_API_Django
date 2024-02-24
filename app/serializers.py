@@ -5,7 +5,7 @@ from  .models import Rating, Meal
 class MealSerializers(serializers.ModelSerializer):
     class Meta:
         model = Meal
-        fields = "__all__"
+        fields = ["id", "title", "description", "no_of_rating", "avg_rating"]
 
 class RatingSerializers(serializers.ModelSerializer):
     class Meta:

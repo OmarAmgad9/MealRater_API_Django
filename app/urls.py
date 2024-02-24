@@ -8,5 +8,5 @@ router.register('meal', views.ViewSets_Meal)
 router.register('rating', views.ViewSets_Rating)
 
 urlpatterns = [
-    path('viewsets/', include(router.urls)),
+    path('', include(router.urls)),
 ]
