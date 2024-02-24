@@ -7,11 +7,15 @@ from .serializers import MealSerializers, RatingSerializers
 from django.contrib.auth.models import User
 from rest_framework import viewsets
 
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAdminUser, AllowAny, IsAuthenticated, IsAuthenticatedOrReadOnly
+
 # CRUD operation from model
 class ViewSets_Meal(viewsets.ModelViewSet):
     queryset = Meal.objects.all()
     serializer_class = MealSerializers
-
+    authentication_classes = [TokenAuthentication, ]
+    permission_classes = [IsAuthenticated]
     @action( detail=True,methods=['POST'])
     def rate_meal(self, request, pk=None):
         if 'stars' in request.data:
@@ -57,3 +61,11 @@ class ViewSets_Meal(viewsets.ModelViewSet):
 class ViewSets_Rating(viewsets.ModelViewSet):
     queryset = Rating.objects.all()
     serializer_class = RatingSerializers
+    authentication_classes = [TokenAuthentication, ]
+    permission_classes = [IsAuthenticated]
+
+    def update(self, request, *args, **Kwargs):
+        response = {
+            'Message': 'This Is Not How You Should Create Update Rating'
+        }
+        return Response(response, status=status.HTTP_400_BAD_REQUEST)
